@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+{% block feed %}
+    {% for post in posts %}
+        <p class="title" id= '{{ post.user.username }}'>
+            {{ post.title }}&nbsp
+            by {{ post.user.username }}
+        </p>
+
+        <p class="content">
+            {{ post.content }}
+        </p>
+    {% endfor %}
+{% endblock %}
+
+
+{% block header %}
+    <h1>Home</h1>
+{% endblock header %}
