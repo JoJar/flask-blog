@@ -27,7 +27,6 @@ a {
 
 p {
     display: grid;
-    
     margin-left: 10em;
     margin-right: 25em;
 }
@@ -50,6 +49,11 @@ p {
     border: 1px solid black;
 }
 
+.greeting {
+    list-style-type: none;
+    margin-top: 0.5em;
+}
+
 header {
     float: left;
     text-indent: 1vh;
@@ -70,6 +74,7 @@ nav {
     border: 1px solid black;
     border-top: 0;
     box-shadow: 1px 1px rgb(146, 146, 142);
+    text-align: center;
 }
 
 aside {

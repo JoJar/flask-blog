@@ -1,5 +1,8 @@
 {% extends 'layout.html' %}
 {% block title %} Homepage {% endblock %}
+{% if current_user.is_authenticated %}
+           Hi {{ current_user.name }}! 
+        {% endif %}
 {% block feed %}
     {% for post in posts %}
         <p> <a href="{{ url_for('post', post_id=post.id) }}"><img src="{{ url_for('static', filename='img/' + post.image_file) }}" height=250px width=250px> </a></p>

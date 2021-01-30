@@ -1,6 +1,7 @@
 from blog.models import User, Post
 from flask import render_template, url_for, redirect
 from blog import app
+from flask_login import login_user, logout_user, current_user
 
 
 @app.route('/')
@@ -38,14 +39,20 @@ def newuser():
     return render_template('newuser.html', title="Welcome, %s!" % form.username.data)
 
 from blog.forms import LoginForm
-from flask_login import login_user
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     form = LoginForm()
-    if request.method == 'POST':
+    if request.method=='POST':
         user = User.query.filter_by(email=form.email.data).first()
         if user is not None and user.verify_password(form.password.data):
             login_user(user)
             return redirect(url_for('home'))
     return render_template('login.html', title="Login", form=form)
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for("home"))

@@ -17,16 +17,26 @@
 
     
     <nav>
-        Navigation <br>
+        {% if current_user.is_authenticated %}
+        <li class="greeting"> Hello <i>{{ current_user.username }}</i>! </li>
+        {% else %}
+        <li class="greeting"> Hello, <i>Guest</i>! </li> 
+        {% endif %}
+
+        <br> Navigation <br>
         <a href="{{ url_for('home') }}">Home</a>&nbsp
-        <a href="{{ url_for('about') }}">About Us</a>
+        <a href="{{ url_for('about') }}">About Us</a> <br>
+        {% if current_user.is_authenticated %}
+        <a href="{{ url_for('logout') }}">Logout</a>
+        {% else %}
+        <a href="{{ url_for('login') }}">Login</a>/<a href="{{ url_for('register') }}">Register</a>
+        {% endif %}
     </nav>
 
     <aside>
     </aside>
 
     <main>
-        
         {% block feed %}
         {% endblock %}
 
