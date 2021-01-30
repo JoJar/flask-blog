@@ -25,6 +25,8 @@ from blog.forms import RegistrationForm
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     form = RegistrationForm()
     if request.method == "POST":
         user = User(first_name=form.first_name.data, last_name=form.last_name.data, username=form.username.data, email=form.email.data, password=form.password.data)
@@ -35,8 +37,10 @@ def register():
 
 @app.route("/newuser")
 def newuser():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     form = RegistrationForm()
-    return render_template('newuser.html', title="Welcome, %s!" % form.username.data)
+    return render_template('newuser.html', title="Welcome!")
 
 from blog.forms import LoginForm
 
@@ -56,3 +60,4 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for("home"))
+    

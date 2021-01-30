@@ -1,5 +1,12 @@
+<script>
+    window.setTimeout(function(){
+        window.location.href = "{{ url_for('login') }}";
+    }, 3000);
+</script>
+
 {% extends 'layout.html' %}
 {% block title %} Welcome! {% endblock %}
 {% block feed %}
 <p> Thank you for registering :) </p>
+<p class="newuser"> You will now be redirected to the login page. If nothing happens after 5 seconds click <a id="newuser-here" href="{{ url_for('login') }}">here</a></p>
 {% endblock %}

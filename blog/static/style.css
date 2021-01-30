@@ -31,8 +31,6 @@ p {
     margin-right: 25em;
 }
 
-
-
 .title {
     grid-column: 3;
 }
@@ -54,6 +52,14 @@ p {
     margin-top: 0.5em;
 }
 
+.newuser {
+    margin-right: 0;
+}
+
+#newuser-here:hover {
+    text-decoration: underline;
+}
+
 header {
     float: left;
     text-indent: 1vh;
@@ -64,8 +70,6 @@ header {
     border: 1px solid black;
     box-shadow: 1px 1px rgb(146, 146, 142);
 }
-
-
 
 nav {
     grid-column: 1/3;
