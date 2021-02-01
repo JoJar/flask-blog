@@ -1,7 +1,8 @@
 from blog.models import User, Post
-from flask import render_template, url_for, redirect
-from blog import app
+from flask import render_template, url_for, redirect, request
+from blog import app, db
 from flask_login import login_user, logout_user, current_user
+from blog.forms import RegistrationForm, LoginForm
 
 
 @app.route('/')
@@ -18,10 +19,6 @@ def about():
 def post(post_id):
     post = Post.query.get_or_404(post_id)
     return render_template('post.html', title=post.title, post=post)
-
-from blog import db
-from flask import request, redirect
-from blog.forms import RegistrationForm
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -41,8 +38,6 @@ def newuser():
         return redirect(url_for('home'))
     form = RegistrationForm()
     return render_template('newuser.html', title="Welcome!")
-
-from blog.forms import LoginForm
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
