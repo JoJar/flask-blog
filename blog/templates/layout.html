@@ -11,18 +11,12 @@
     
 
     <header id="header">
-        {% block header %}
-        {% endblock %}
+        {% block header -%}
+        {%- endblock %}
     </header>
 
     
-    <nav>
-        {% if current_user.is_authenticated %}
-        <li class="greeting"> Hello <i>{{ current_user.username }}</i>! </li>
-        {% else %}
-        <li class="greeting"> Hello, <i>Guest</i>! </li> 
-        {% endif %}
-
+    <nav id="menu">
         <br> Navigation <br>
         <a href="{{ url_for('home') }}">Home</a>&nbsp
         <a href="{{ url_for('about') }}">About Us</a> <br>
@@ -39,7 +33,6 @@
     <main>
         {% block feed %}
         {% endblock %}
-
     </main>
 </body>
 </html>
