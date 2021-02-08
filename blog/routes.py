@@ -1,5 +1,5 @@
 from blog.models import User, Post
-from flask import render_template, url_for, redirect, request
+from flask import render_template, url_for, redirect, request, flash
 from blog import app, db
 from flask_login import login_user, logout_user, current_user
 from blog.forms import RegistrationForm, LoginForm
@@ -25,10 +25,11 @@ def register():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     form = RegistrationForm()
-    if request.method == "POST":
+    if form.validate_on_submit():
         user = User(first_name=form.first_name.data, last_name=form.last_name.data, username=form.username.data, email=form.email.data, password=form.password.data)
         db.session.add(user)
         db.session.commit()
+        flash('Registration successful...')
         return redirect(url_for('newuser'))
     return render_template('register.html', title="Register", form=form)
 
@@ -44,11 +45,13 @@ def login():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     form = LoginForm()
-    if request.method=='POST':
+    if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user is not None and user.verify_password(form.password.data):
             login_user(user)
+            flash('Login successful...')
             return redirect(url_for('home'))
+        flash('Invalid email address or password...')
     return render_template('login.html', title="Login", form=form)
 
 @app.route("/logout")
