@@ -1,15 +1,36 @@
-from blog.models import User, Post
-from flask import render_template, url_for, redirect, request, flash
+from blog.models import User, Post, Comment, Vote, Fave
+from flask import render_template, url_for, redirect, request, flash, Blueprint, jsonify
 from blog import app, db
-from flask_login import login_user, logout_user, current_user
-from blog.forms import RegistrationForm, LoginForm
-
+from flask_login import login_user, logout_user, current_user, login_required
+from blog.forms import RegistrationForm, LoginForm, CommentForm, SearchForm, VoteForm, FaveForm
 
 @app.route('/')
-@app.route('/home')
+@app.route('/home', methods=['GET', 'POST'])
 def home():
-    posts = Post.query.all()
-    return render_template('home.html', posts=posts)
+    search = SearchForm(request.form)
+    if request.method == 'POST':
+        print(search.data)
+        return search_results(search)
+
+    posts= Post.query.all()
+    return render_template('home.html', posts=posts, form=search)
+
+@app.route('/results', methods=['GET', 'POST'])
+def search_results(search):
+    results = []
+    search_string = search.data['userquery']
+
+    if search.data['userquery']:
+        post = Post.query.filter(Post.title.contains(search_string) | Post.content.contains(search_string))
+        results = post.all()
+    
+    if not results:
+        flash('No results found.')
+        return redirect('/home')
+
+    else:
+        return render_template('results.html', post=post, results=results)
+
 
 @app.route('/about')
 def about():
@@ -18,7 +39,51 @@ def about():
 @app.route("/post/<int:post_id>")
 def post(post_id):
     post = Post.query.get_or_404(post_id)
-    return render_template('post.html', title=post.title, post=post)
+    votes = Vote.query.filter(Vote.post_id == post.id)
+    comments = Comment.query.filter(Comment.post_id == post.id)
+    comment_form = CommentForm()
+    vote_form = VoteForm()
+    fave_form = FaveForm()
+    return render_template('post.html', title=post.title, post=post, comments=comments, votes=votes, comment_form=comment_form, vote_form=vote_form, fave_form=fave_form)
+
+@app.route('/post/<int:post_id>/vote', methods=["GET", "POST"])
+@login_required
+def upvote(post_id):
+    post = Post.query.get_or_404(post_id)
+    form = VoteForm()
+    if form.validate_on_submit():
+        x = Vote.query.get(post_id)
+        x.number = x.number+1
+        x.vote_id = current_user.id
+        db.session.commit()
+        flash("Voted")
+        return redirect(f'/post/{post.id}')
+
+@app.route('/post/<int:post_id>/downvote', methods=["GET", "POST"])
+@login_required
+def downvote(post_id):
+    post = Post.query.get_or_404(post_id)
+    form = VoteForm()
+    if form.validate_on_submit():
+        x = Vote.query.get(post_id)
+        x.number = x.number-1
+        db.session.commit()
+        flash("Voted")
+        return redirect(f'/post/{post.id}')
+
+@app.route('/post/<int:post_id>/comment', methods=["GET", "POST"])
+@login_required
+def post_comment(post_id):
+    post = Post.query.get_or_404(post_id)
+    form = CommentForm()
+    if form.validate_on_submit():
+        db.session.add(Comment(content=form.comment.data, post_id=post.id, author_id=current_user.id))
+        db.session.commit()
+        flash("Comment Posted")
+        return redirect(f'/post/{post.id}')
+    
+    comments= Comment.query.filter(comment.post_id == post.id)
+    return render_template('post.html', title=post.title, post=post, comments=comments, form=form)
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -49,7 +114,6 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         if user is not None and user.verify_password(form.password.data):
             login_user(user)
-            flash('Login successful...')
             return redirect(url_for('home'))
         flash('Invalid email address or password...')
     return render_template('login.html', title="Login", form=form)
@@ -58,4 +122,30 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for("home"))
-    
+
+@app.route("/profile/<username>", methods=["GET", "POST"])
+@login_required
+def profile(username):
+    user = User.query.filter_by(username=username).first()
+    if user == None:
+        flash('Error, this profile does not exit.')
+        return render_template('home.html')
+    favourites = Fave.query.filter(Fave.user_id == user.id)
+    #favourites = Post.query.filter(Fave.post_id == post.id)
+    return render_template('profile.html', user=user, favourites=favourites)
+
+@app.route("/post/<int:post_id>/favourite", methods=["GET", "POST"])
+@login_required
+def add_fave(post_id):
+    post = Post.query.get_or_404(post_id)
+    form = FaveForm()
+    if form.validate_on_submit():
+        if Fave.query.filter(Fave.user_id==current_user.id, Fave.favourite==post.id).first() != None:
+            Fave.query.filter(Fave.user_id==current_user.id, Fave.favourite==post.id).delete()
+            db.session.commit()
+            flash("Removed %s from %s's favourites" %(post.title, current_user.username))
+            return redirect(f'/post/{post.id}')
+        db.session.add(Fave(user_id=current_user.id, favourite=post.id))
+        db.session.commit()
+        flash("Added %s to %s's favourites" %(post.title, current_user.username))
+        return redirect(f'/post/{post.id}')

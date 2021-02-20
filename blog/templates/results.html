@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+{% block title %} Search Results...{% endblock %}
+{% block header %}Search Results{% endblock header %}
+
+{% block search %}
+    <form class="search-form" method="POST" action="">
+        <input type="search" class="search-input" name="userquery" placeholder="Search...">
+        <button type="submit" value="search">Search</button>
+    </form>
+{% endblock %}
+
+{% block feed %}
+    {% for post in results %}
+            <p> <a href="{{ url_for('post', post_id=post.id) }}"><img src="{{ url_for('static', filename='img/' + post.image_file) }}" height=250px width=250px> </a></p>
+
+            <p class="title" id= '{{ post.user.username }}'>
+                <a href="{{ url_for('post', post_id=post.id) }}">"{{ post.title }}"</a>&nbsp
+                by {{ post.user.username }}
+            </p>
+
+            <p class="content">
+                {{ post.content }}
+            </p>
+    {% endfor %}
+{% endblock %}

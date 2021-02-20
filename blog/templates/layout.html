@@ -4,27 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content= "width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
-    <div>
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul class=flashes>
-        {% for message in messages %}
-        <li>{{ message }}</li>
-        {% endfor %}
-        </ul>
-        {% endif %}
-        {% endwith %}
-    </div>
-        
     <link rel="stylesheet" type=text/css href="{{ url_for('static', filename='style.css') }}"/>
 </head>
 
 <body>
-
     <header class="head">
         {% block header -%}
-        {%- endblock %}  
+        {%- endblock %}
     </header>
+
+    {% block search %}
+    {% endblock %}
 
     <div class="wrapper">
         <div class="navbar">
@@ -51,6 +41,22 @@
     <main>
         {% block feed %}
         {% endblock %}
+
+        <div>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+            <li class="err"><span style="color: red;">{{ message }}</span></li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+        </div>
     </main>
 </body>
 </html>
+
+
+{% block javascript %}
+{% endblock %}

@@ -1,7 +1,15 @@
 {% extends 'layout.html' %}
-{% block title -%}
-Homepage
-{%- endblock %}
+{% block title -%}Homepage{%- endblock %}
+
+{% block header %}Home{% endblock header %}
+
+{% block search %}
+    <form class="search-form" method="POST" action="">
+        <input type="search" class="search-input" name="userquery" placeholder="Search...">
+        <button type="submit" value="search">Search</button>
+    </form>
+{% endblock %}
+
 
 {% block feed %}
     {% if current_user.is_authenticated %}
@@ -10,6 +18,7 @@ Homepage
     <li class="greeting"> Hello, <i>Guest</i>! </li> 
     {% endif %}
     </p>
+ 
     {% for post in posts %}
         <p> <a href="{{ url_for('post', post_id=post.id) }}"><img src="{{ url_for('static', filename='img/' + post.image_file) }}" height=250px width=250px> </a></p>
 
@@ -23,8 +32,3 @@ Homepage
         </p>
     {% endfor %}
 {% endblock %}
-
-
-{% block header %}
-    <h1>Home</h1>
-{% endblock header %}

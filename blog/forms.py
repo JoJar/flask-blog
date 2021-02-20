@@ -27,12 +27,25 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators = [DataRequired()])
     submit = SubmitField('Login')
 
-    def validate_username_login(self, username):
-        user = User.query.filter_by(username=username.data).first()
-        if user is None:
-            raise ValidationError('Username does not exist.')
-    
-    def validate_email_login(self, email):
+    def validate_login(self, email):
         user = User.query.filter_by(email=email.data).first()
-        if user is None:
-            raise ValidationError('This is email does not exist.')
+        if user is None or not user.verify_password(form.password.data):
+            raise ValidationError('Incorrect email or password.')
+
+class CommentForm(FlaskForm):
+    comment = StringField('Comment', validators=[InputRequired()])
+    submit = SubmitField('Post Comment')
+
+class SearchForm(FlaskForm):
+    userquery = StringField('Search', validators=[InputRequired()])
+    search = SubmitField('Search')
+
+class VoteForm(FlaskForm):
+    submit_upvote = SubmitField('')
+    submit_downvote = SubmitField('')
+
+    #def validate_voter(self, email):
+    #   user = User.query.filter_by(email=)
+
+class FaveForm(FlaskForm):
+    submit_favorite = SubmitField('')

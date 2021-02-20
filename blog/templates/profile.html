@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+{% block feed %}
+<p>{{ user.username }}</p>
+{% for post in favourites %}
+        <p> <a href="{{ url_for('post', post_id=post.id) }}"></a></p>
+
+        <p class="title" id= '{{ post.user.username }}'>
+            <a href="{{ url_for('post', post_id=post.id) }}">"{{ post.post.title }}"</a>&nbsp
+            by {{ post.user.username }}
+        </p>
+    {% endfor %}
+{% endblock %}

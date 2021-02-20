@@ -1,11 +1,12 @@
 {% extends 'layout.html' %}
-{% block header %} <h1>Login</h1>{% endblock %}
+{% block header %}Login{% endblock %}
 {% block title %}Login Page{% endblock %}
 {% block feed %}
 <form method="POST" action="">
     {{ form.csrf_token }}
     {{ form.email.label }} {{ form.email }}
     {{ form.password.label }} {{ form.password }}
+
     <input type="submit" value="Login">
 </form>
 
