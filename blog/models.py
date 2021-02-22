@@ -64,8 +64,8 @@ class Comment(db.Model):
 class Vote(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     number = db.Column(db.Integer, nullable=False, default=0)
-    vote_id = db.Column(db.Integer, db.ForeignKey('vote.id'), nullable=True)
-    
+    date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    vote_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
 
     def __repr__(self):

@@ -3,6 +3,8 @@ from flask import render_template, url_for, redirect, request, flash, Blueprint,
 from blog import app, db
 from flask_login import login_user, logout_user, current_user, login_required
 from blog.forms import RegistrationForm, LoginForm, CommentForm, SearchForm, VoteForm, FaveForm
+from sqlalchemy import desc
+from datetime import datetime
 
 @app.route('/')
 @app.route('/home', methods=['GET', 'POST'])
@@ -52,9 +54,12 @@ def upvote(post_id):
     post = Post.query.get_or_404(post_id)
     form = VoteForm()
     if form.validate_on_submit():
-        x = Vote.query.get(post_id)
+        if Vote.query.filter(Vote.vote_id==current_user.id, Vote.post_id==post.id).first() != None:
+            flash("You've already vote on this post!")
+            return redirect(f'/post/{post.id}')
+        x = Vote.query.filter(Vote.post_id == post.id).first()
         x.number = x.number+1
-        x.vote_id = current_user.id
+        db.session.add(Vote(number=x.number, post_id=post.id, vote_id=current_user.id))
         db.session.commit()
         flash("Voted")
         return redirect(f'/post/{post.id}')
@@ -65,8 +70,14 @@ def downvote(post_id):
     post = Post.query.get_or_404(post_id)
     form = VoteForm()
     if form.validate_on_submit():
-        x = Vote.query.get(post_id)
+        if Vote.query.filter(Vote.vote_id==current_user.id, Vote.post_id==post.id).first() != None:
+            flash("You've already voted on this post!")
+            return redirect(f'/post/{post.id}')
+        #x = Vote.query.get(post_id)
+        #x = Vote.query.filter(Vote.post_id).order_by(desc('date')).first()
+        x = Vote.query.filter(Vote.post_id == post.id).first()
         x.number = x.number-1
+        db.session.add(Vote(number=x.number, post_id=post.id, vote_id=current_user.id))
         db.session.commit()
         flash("Voted")
         return redirect(f'/post/{post.id}')
