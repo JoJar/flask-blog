@@ -13,8 +13,7 @@ def home():
     if request.method == 'POST':
         print(search.data)
         return search_results(search)
-
-    posts= Post.query.all()
+    posts= Post.query.limit(3).all()
     return render_template('home.html', posts=posts, form=search)
 
 @app.route('/results', methods=['GET', 'POST'])
@@ -38,7 +37,7 @@ def search_results(search):
 def about():
     return render_template('about.html', title='About')
 
-@app.route("/post/<int:post_id>")
+@app.route("/post/<int:post_id>", methods=['GET', 'POST'])
 def post(post_id):
     post = Post.query.get_or_404(post_id)
     votes = Vote.query.filter(Vote.post_id == post.id)
@@ -73,8 +72,6 @@ def downvote(post_id):
         if Vote.query.filter(Vote.vote_id==current_user.id, Vote.post_id==post.id).first() != None:
             flash("You've already voted on this post!")
             return redirect(f'/post/{post.id}')
-        #x = Vote.query.get(post_id)
-        #x = Vote.query.filter(Vote.post_id).order_by(desc('date')).first()
         x = Vote.query.filter(Vote.post_id == post.id).first()
         x.number = x.number-1
         db.session.add(Vote(number=x.number, post_id=post.id, vote_id=current_user.id))
@@ -160,3 +157,12 @@ def add_fave(post_id):
         db.session.commit()
         flash("Added %s to %s's favourites" %(post.title, current_user.username))
         return redirect(f'/post/{post.id}')
+
+@app.route('/all-posts', methods=['GET', 'POST'])
+def all_posts():
+    search = SearchForm(request.form)
+    if request.method == 'POST':
+        print(search.data)
+        return search_results(search)
+    posts= Post.query.all()
+    return render_template('view-posts.html', posts=posts, form=search)

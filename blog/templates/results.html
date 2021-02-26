@@ -1,6 +1,10 @@
 {% extends 'layout.html' %}
+{% block customcss %}
+<link rel="stylesheet" type=text/css href="{{ url_for('static', filename='homestyle.css') }}"/>
+<style></style>
+{% endblock %}
 {% block title %} Search Results...{% endblock %}
-{% block header %}Search Results{% endblock header %}
+{% block header %}<h1>Search Results</h1>{% endblock header %}
 
 {% block search %}
     <form class="search-form" method="POST" action="">
@@ -11,15 +15,16 @@
 
 {% block feed %}
     {% for post in results %}
-            <p> <a href="{{ url_for('post', post_id=post.id) }}"><img src="{{ url_for('static', filename='img/' + post.image_file) }}" height=250px width=250px> </a></p>
+    <a class="postimg" style="margin-top: 1em;" href="{{ url_for('post', post_id=post.id) }}"><img src="{{ url_for('static', filename='img/' + post.image_file) }}" height=250px width=250px></a>
+    <div class="post" style="margin-top: 1em;">
+        <span class="postid" id= '{{ post.user.username }}'>
+            <a class="postlnk" href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a>&nbsp
+            <small>by {{ post.user.username }}</small>
+        </span>
 
-            <p class="title" id= '{{ post.user.username }}'>
-                <a href="{{ url_for('post', post_id=post.id) }}">"{{ post.title }}"</a>&nbsp
-                by {{ post.user.username }}
-            </p>
-
-            <p class="content">
-                {{ post.content }}
-            </p>
+        <span class="content">
+            {{ post.content }}
+        </span>
+    </div>
     {% endfor %}
 {% endblock %}

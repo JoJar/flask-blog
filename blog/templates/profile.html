@@ -1,4 +1,10 @@
 {% extends 'layout.html' %}
+{% block header %}
+<h1> {{ user.username }} </h1>
+{% endblock %}
+{% block title %}
+{{ user.username }}'s profile
+{% endblock %}
 {% block feed %}
 <p>{{ user.username }}</p>
 {% for post in favourites %}

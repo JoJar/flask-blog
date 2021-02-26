@@ -1,0 +1,165 @@
+.info {
+    color: white;
+    margin-top: 1em;
+    margin-right: 1em;
+    text-align: center;
+}
+
+.classimg {
+    grid-column: 1;
+}
+
+img {
+    border-radius: 5%;
+    margin-left: 2em;
+}
+
+.post {
+    grid-column: 2;
+    margin-top: 1em;
+    text-indent: 0.4em;
+    display: grid;
+    background: #334e68;
+    grid-template-rows: 1fr 5fr;
+    margin-right: 1em;
+    border-radius: 2%;
+    justify-items: left;
+    border: 1px solid black;
+    position: relative;
+}
+
+.post > span:nth-child(odd) {
+    background: #627d98;
+}
+
+.postid {
+    grid-column: 1;
+    border-radius: 0.3em;
+    color: white;
+    padding-top: 0.5em;
+    padding-left: 2%;
+    width: 98%;
+}
+
+.content {
+    grid-column: 1;
+    grid-row: 2;
+    line-height: 1.6;
+    color: #BCCCDC;
+    border: black;
+    margin-top: 0.5em;
+    margin-bottom: 1em;
+    padding-left: 2%;
+    word-wrap: break-word;
+}
+
+.postlnk {
+    width: 95%;
+    margin-top: 0.5em;
+    font-weight: bold;
+    color: white;
+    font-size: 24px;
+}
+
+small {
+    margin-top: 1em;
+    float: right;
+    padding-right: 1em;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.interact {
+    /*grid-column: 1;*/
+    display: grid;
+    grid-template-columns: repeat(7, 20px);
+    grid-template-rows: 20px;
+    grid-gap: 1em;
+    justify-items: center;
+}
+
+#submit_upvote {
+    grid-column: 3;
+    background-image: url('img/thumbs-up.png');
+    background-size: cover;
+    background-color: rgba(50, 63, 75, 0.1);
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+    border-color: #3d4c5a;
+    margin-left: 155px;
+}
+
+#total {
+    grid-column: 4;
+    font-weight: 550;
+    font-size: 20px;
+}
+
+#submit_downvote {
+    grid-column: 5;
+    background-image: url('img/thumbs-down.png');
+    background-size: cover;
+    background-color: rgba(50, 63, 75, 0.1);
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+    border-color: #3d4c5a;
+}
+
+#submit_favorite {
+    grid-column: 6;
+    background-image: url('img/favorite.png');
+    background-size: cover;
+    background-color: rgba(50, 63, 75, 0.1);
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+    border-color: #3d4c5a;
+}
+
+.showcomments {
+    grid-column: 2;
+    display: grid;
+    width: 95%;
+    grid-template-columns: auto;
+    grid-template-rows: ;
+    color: #BCCCDC;
+    text-indent: 0.2em;
+}
+
+#eachcomment {
+    width: 95%;
+    padding: 0.5em;
+    border: 1px solid black;
+    background: #334e68;
+    word-wrap: break-word;
+}
+
+#author {
+    font-style: italic;
+}
+
+.writecomment {
+    grid-column: 2;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: repeat(2, minmax(100px, auto));
+}
+
+#comment {
+    background: #323f4b;
+    width: 95%;
+}
+
+#submit {
+    margin-top: 1em;
+    color: white;
+    background: #323f4b;
+    border: 0.7px solid #3d4c5a;
+}
+
+#submit:hover {
+    cursor: pointer;
+    border: 0.7px solid #673AB7;
+}

@@ -3,8 +3,10 @@
         window.location.href = "{{ url_for('login') }}";
     }, 3000);
 </script>
-
 {% extends 'layout.html' %}
+{% block header %}
+<h1>Welcome!</h1>
+{% endblock %}
 {% block title %} Welcome! {% endblock %}
 {% block feed %}
 <p> Thank you for registering :) </p>

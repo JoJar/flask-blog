@@ -1,59 +1,62 @@
 {% extends 'layout.html' %}
+{% block customcss %}
+<link rel="stylesheet" type=text/css href="{{ url_for('static', filename='poststyle.css') }}"/>
+{% endblock %}
 {% block title %} {{ post.title }}{% endblock %}
-{% block header %} {{ post.title }} {% endblock header %}
+{% block header %} <h1>{{ post.title }}</h1> {% endblock header %}
 
 {% block feed %}
-<p><img src="{{ url_for('static', filename='img/' + post.image_file) }}"height=250px, width=250px></p>
-<p>{{ post.title }} &nbsp Author: {{ post.user.username }} </p>
-<p>{{ post.content }}</p>
-
-<div class="voting">
-    <form method="POST" action="{{ url_for('upvote', post_id=post.id) }}">
-        {{ vote_form.hidden_tag() }}
-        {{ vote_form.submit_upvote() }}
-    </form>
-
-    {% for vote in votes %}
-    {% if loop.last %}
-    {% if vote.number > 0 %}
-    <span class="total" style="color: green;">{{ vote.number }}</span>
-    {% else %}
-    <span class="total" style="color: red;">{{ vote.number }}</span>
-    {% endif %}
-    {% endif %}
-    {% endfor %}
-
-    <form method="POST" action="{{ url_for('downvote', post_id=post.id) }}">
-        {{ vote_form.hidden_tag() }}
-        {{ vote_form.submit_downvote() }}
-    </form>
+<p class="postimg"><img src="{{ url_for('static', filename='img/' + post.image_file) }}"height=250px, width=250px></p>
+<div class="post">
+    <span class="postid" id= '{{ post.user.username }}'>
+        <a class="postlnk" >{{ post.title }}</a>&nbsp
+        <small>by {{ post.user.username }}</small>
+    </span>
+<span class="content">
+    {{ post.content }}
+</span>
 </div>
 
-<div class="fave">
+<div class="interact">
+        <form method="POST" action="{{ url_for('upvote', post_id=post.id) }}">
+            {{ vote_form.hidden_tag() }}
+            {{ vote_form.submit_upvote() }}
+        </form>
+        {% for vote in votes %}
+        {% if loop.last %}
+        {% if vote.number > 0 %}
+        <span id="total" style="color: green;">{{ vote.number }}</span>
+        {% else %}
+        <span id="total" style="color: red;">{{ vote.number }}</span>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        <form method="POST" action="{{ url_for('downvote', post_id=post.id) }}">
+            {{ vote_form.hidden_tag() }}
+            {{ vote_form.submit_downvote() }}
+        </form>
 
-    <form method="POST" action="{{ url_for('add_fave', post_id=post.id) }}">
-        {{ fave_form.hidden_tag() }}
-        {{ fave_form.submit_favorite() }}
-    </form>
+        <form method="POST" action="{{ url_for('add_fave', post_id=post.id) }}">
+            {{ fave_form.hidden_tag() }}
+            {{ fave_form.submit_favorite() }}
+        </form>
 </div>
-
+<div class="showcomments">
 {% for comment in comments %}
-<p> {{ comment.content }} &nbsp <small>Author: {{ comment.user.username }} </small> </p>
+<p id="eachcomment"> {{ comment.content }} &nbsp <small><i>Author: {{ comment.user.username }} </i></small> </p>
 {% endfor %}
+</div>
 
+<div class="writecomment">
 <form method="POST" action="{{ url_for('post_comment', post_id=post.id) }}">
     {{ comment_form.hidden_tag() }}
-
-    <div class="">
         {{ comment_form.comment.label }} {{ comment_form.comment }}
         {% for error in comment_form.comment.errors %}
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
-    </div>
-    <div class="">
         {{ comment_form.submit() }}
-    </div>
 </form>
+</div>
 {% endblock feed %}
 
 

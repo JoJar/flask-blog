@@ -5,35 +5,46 @@
     <meta name="viewport" content= "width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" type=text/css href="{{ url_for('static', filename='style.css') }}"/>
+    {% block customcss %}
+    {% endblock %}
 </head>
 
 <body>
+    <div class="wrapper">
     <header class="head">
         {% block header -%}
         {%- endblock %}
+        {% block search %}
+        {% endblock %}
+            <nav id="menu">
+                <a class="navi" href="{{ url_for('home') }}">Home</a>
+                <a class="navi" href="{{ url_for('all_posts') }}">All Posts</a>
+                <a class="navi" href="{{ url_for('about') }}">About</a>
+                {% if current_user.is_authenticated %}
+                <a class="navi" href="{{ url_for('logout') }}">Logout</a>
+                {% else %}
+                <a class="navi" href="{{ url_for('login') }}">Login</a><span id="slash">/</span><a class="navi" href="{{ url_for('register') }}">Register</a>
+                {% endif %}
+            </nav>
+
+            <div class="burgermenu">
+                <div class="navbar">
+                  <div class="first"></div>
+                  <div class="second"></div>
+                  <div class="third"></div>
+                </div>
+            </div>
     </header>
 
-    {% block search %}
-    {% endblock %}
+    
 
-    <div class="wrapper">
+    <div class="burgermenu">
         <div class="navbar">
           <div class="first"></div>
           <div class="second"></div>
           <div class="third"></div>
         </div>
     </div>
-
-    <nav id="menu">
-        <br> Navigation <br>
-        <a href="{{ url_for('home') }}">Home</a>&nbsp
-        <a href="{{ url_for('about') }}">About Us</a> <br>
-        {% if current_user.is_authenticated %}
-        <a href="{{ url_for('logout') }}">Logout</a>
-        {% else %}
-        <a href="{{ url_for('login') }}">Login</a>/<a href="{{ url_for('register') }}">Register</a>
-        {% endif %}
-    </nav>
 
     <aside>
     </aside>
@@ -54,6 +65,7 @@
             {% endwith %}
         </div>
     </main>
+    </div>
 </body>
 </html>
 

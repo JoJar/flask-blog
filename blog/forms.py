@@ -33,7 +33,7 @@ class LoginForm(FlaskForm):
             raise ValidationError('Incorrect email or password.')
 
 class CommentForm(FlaskForm):
-    comment = StringField('Comment', validators=[InputRequired()])
+    comment = StringField('', validators=[InputRequired()])
     submit = SubmitField('Post Comment')
 
 class SearchForm(FlaskForm):
@@ -49,3 +49,6 @@ class VoteForm(FlaskForm):
 
 class FaveForm(FlaskForm):
     submit_favorite = SubmitField('')
+
+class SortForm(FlaskForm):
+    submit_sort = SubmitField

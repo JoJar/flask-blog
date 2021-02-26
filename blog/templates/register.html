@@ -1,5 +1,8 @@
 {% extends 'layout.html' %}
-{% block header %}Register{% endblock %}
+{% block customcss %}
+<link rel="stylesheet" type=text/css href="{{ url_for('static', filename='registerstyle.css') }}"/>
+{% endblock %}
+{% block header %}<h1>Register</h1>{% endblock %}
 {% block title %} Register {% endblock %}
 {% block feed %}
 <form method="POST" action="">
@@ -9,12 +12,10 @@
     {{ form.username.label }} {{ form.username }}
     {{ form.email.label }} {{ form.email }}
     {{ form.password.label }} {{ form.password }}
-    
-    
-    <br>{{  form.confirm_password.label }} {{ form.confirm_password }}
+    {{  form.confirm_password.label }} {{ form.confirm_password }}
 
     
-    <input type="submit" value="Register">
+    <input id="submit" type="submit" value="Register">
 </form>
 
 {% for error in form.username.errors %}

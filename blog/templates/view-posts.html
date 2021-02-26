@@ -1,16 +1,39 @@
 {% extends 'layout.html' %}
+{% block customcss %}
+<link rel="stylesheet" type=text/css href="{{ url_for('static', filename='homestyle.css') }}"/>
+{% endblock %}
+{% block title %}All Posts{% endblock %}
+
+{% block header %}
+<h1>All Posts</h1>
+{% block search %}
+    <form class="search-form" method="POST" action="">
+        <input type="search" class="search-input" name="userquery" placeholder="Search...">
+        <button type="submit" value="search">Search</button>
+    </form>
+{% endblock %}
+{% endblock %}
+
 {% block feed %}
+{% if current_user.is_authenticated %}
+    <li class="greeting"> Hello <i>{{ current_user.username }}</i>! </li>
+    {% else %}
+    <li class="greeting"> Hello, <i>Guest</i>! </li> 
+    {% endif %}
+    <p class="info"> Use the search function at the top of the page to find a specific blog or read the post descriptions and choose whatever takes your fancy!
+    </p>
 {% for post in posts %}
-        <p> <a href="{{ url_for('post', post_id=post.id) }}"><img src="{{ url_for('static', filename='img/' + post.image_file) }}" height=250px width=250px> </a></p>
+        <a class="postimg" href="{{ url_for('post', post_id=post.id) }}"><img src="{{ url_for('static', filename='img/' + post.image_file) }}" height=250px width=250px></a>
+    <div class="post">
+        <span class="postid" id= '{{ post.user.username }}'>
+            <a class="postlnk" href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a>&nbsp
+            <small>by {{ post.user.username }}</small>
+        </span>
 
-        <p class="title" id= '{{ post.user.username }}'>
-            <a href="{{ url_for('post', post_id=post.id) }}">"{{ post.title }}"</a>&nbsp
-            by {{ post.user.username }}
-        </p>
-
-        <p class="content">
+        <span class="content">
             {{ post.content }}
-        </p>
+        </span>
+    </div>
 {% endfor %}
 
 {% endblock %}

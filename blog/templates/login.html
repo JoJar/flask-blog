@@ -1,5 +1,8 @@
 {% extends 'layout.html' %}
-{% block header %}Login{% endblock %}
+{% block customcss %}
+<link rel="stylesheet" type=text/css href="{{ url_for('static', filename='formstyle.css') }}"/>
+{% endblock %}
+{% block header %}<h1>Login</h1>{% endblock %}
 {% block title %}Login Page{% endblock %}
 {% block feed %}
 <form method="POST" action="">
@@ -7,7 +10,7 @@
     {{ form.email.label }} {{ form.email }}
     {{ form.password.label }} {{ form.password }}
 
-    <input type="submit" value="Login">
+    <input id="submit" type="submit" value="Login">
 </form>
 
 {% endblock %}
