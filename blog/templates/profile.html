@@ -1,4 +1,7 @@
 {% extends 'layout.html' %}
+{% block customcss %}
+<link rel="stylesheet" type=text/css href="{{ url_for('static', filename='profilestyle.css') }}"/>
+{% endblock %}
 {% block header %}
 <h1> {{ user.username }} </h1>
 {% endblock %}
@@ -6,13 +9,22 @@
 {{ user.username }}'s profile
 {% endblock %}
 {% block feed %}
-<p>{{ user.username }}</p>
+<div class="showfavs">
+<p class="favourited">{{ user.username }}'s Favorites</p>
 {% for post in favourites %}
-        <p> <a href="{{ url_for('post', post_id=post.id) }}"></a></p>
-
-        <p class="title" id= '{{ post.user.username }}'>
-            <a href="{{ url_for('post', post_id=post.id) }}">"{{ post.post.title }}"</a>&nbsp
-            by {{ post.user.username }}
+        <p id="eachpost" id= '{{ post.user.username }}'>
+            <a class="postlnk" href="{{ url_for('post', post_id=post.post.id) }}">"{{ post.post.title }}"</a>
         </p>
+
+        {% if current_user.username == user.username %}
+        <form method="POST" action="{{ url_for('remove_fave_profile', post_id=post.post.id) }}">
+            {{ fave_form.hidden_tag() }}
+            {{ fave_form.submit_favorite() }}
+            <span id="describetext">Remove '{{ post.post.title }}'</span>
+        </form>
+        {% endif %}
+        
+
     {% endfor %}
+</div>
 {% endblock %}

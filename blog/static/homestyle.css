@@ -24,6 +24,7 @@ img {
 
 .post {
     grid-column: 2;
+    height: 250px;
     display: grid;
     background: #334e68;
     grid-template-rows: 1fr 5fr;
@@ -56,6 +57,17 @@ img {
     margin-top: 0.5em;
     margin-bottom: 1em;
     padding-left: 2%;
+    overflow: hidden;
+    /*
+    Code adds an ellipsis after X (in this case 7) number of lines
+    Taken from Dropshadows by David DeSandro 26 August 2010
+    Accessed: 01/03/2021
+    URL: https://dropshado.ws/post/1015351370/webkit-line-clamp
+    */
+    display: -webkit-box;
+    -webkit-line-clamp: 7; 
+    -webkit-box-orient: vertical;
+    /* end of referenced code */
 }
 
 .postlnk {
@@ -66,4 +78,41 @@ img {
 
 .postlnk:hover {
     color: #673AB7;
+}
+
+@media(max-width: 600px) {
+    .wrapper {
+        grid-template-columns: 1fr;
+        grid-template-areas: "header" "navi" "main"
+    }
+    main {
+        grid-template-columns: 1fr;
+        grid-column-gap: 0em;
+        grid-row-gap: 0.5em;
+        grid-template-areas: ".info" "img" ".post";
+        align-items: center;
+    }
+    .content {
+        grid-column: 1;
+        align-items: center;
+    }
+    .post {
+        grid-column: 1;
+        margin-right: 0em;
+        width: 92vw;
+    }
+    .info {
+        margin-right: 0em;
+    }
+    img {
+        border-radius: 5%;
+        margin-left: 0em;
+        margin-right: 0em;
+        width: 92vw;
+    }
+    .postimg {
+        display: grid;
+        align-items: center;
+        grid-template-columns: 1fr;
+    }
 }

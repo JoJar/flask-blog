@@ -1,0 +1,90 @@
+main {
+    grid-template-columns: 1fr;
+    grid-row: 2/-1;
+    justify-items: center;
+}
+
+.wrapper {
+    height: 100vh;
+    grid-template-rows: repeat(5, 100px);
+    grid-row-gap: 1em;
+}
+
+.usernameProfile {
+    grid-row: 1;
+    grid-column: 1;
+    font-size: 32px;
+    color: white;
+}
+
+.favourited {
+    grid-row: 1;
+    grid-column: 1;
+    font-size: 24px;
+    text-align: center;
+}
+
+.showfavs {
+    display: grid;
+    grid-template-columns: 1fr 20px;
+    grid-auto-rows: min-content;
+
+    color: #BCCCDC;
+    line-break: strict;
+    word-break: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+    align-items: center;
+}
+
+#eachpost {
+    grid-column: 1;
+    padding: 0.5em;
+    text-align: center;
+}
+
+.postlnk {
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+}
+
+.postlnk:hover {
+    color: #673AB7;
+}
+
+#submit_favorite {
+    background-image: url('img/favorite-minus.png');
+    grid-column: 2;
+    background-size: cover;
+    background-color: rgba(50, 63, 75, 0.1);
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+    border-color: #3d4c5a;
+    position: relative;
+}
+/* 
+When hovering over the submit button a box describing the button function is displayed.
+This code was adapted from W3Schools tooltip segment
+Accessed: 01/03/2021
+URL: https://www.w3schools.com/css/css_tooltip.asp
+*/
+#describetext {
+    visibility: hidden;
+    width: fit-content;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 0.3em;
+    margin-left: 0.5em;
+    font-size: 12px;
+    position: absolute;
+}
+
+#submit_favorite:hover~#describetext {
+    visibility: visible;
+}
+
+/* end reference */ 

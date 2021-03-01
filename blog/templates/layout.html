@@ -22,6 +22,7 @@
                 <a class="navi" href="{{ url_for('about') }}">About</a>
                 {% if current_user.is_authenticated %}
                 <a class="navi" href="{{ url_for('logout') }}">Logout</a>
+                <a class="navi" href="{{ url_for('profile', username=current_user.username) }}">Profile</a>
                 {% else %}
                 <a class="navi" href="{{ url_for('login') }}">Login</a><span id="slash">/</span><a class="navi" href="{{ url_for('register') }}">Register</a>
                 {% endif %}
@@ -45,9 +46,6 @@
           <div class="third"></div>
         </div>
     </div>
-
-    <aside>
-    </aside>
 
     <main>
         {% block feed %}

@@ -1,7 +1,16 @@
 main {
     grid-template-columns: 1fr;
+    grid-template-rows: 20vh;
+    grid-row: 2/-1;
     justify-items: center;
 }
+
+.wrapper {
+    height: 100vh;
+    grid-template-rows: repeat(5, 100px);
+    grid-row-gap: 1em;
+}
+
 
 label {
     color: white;

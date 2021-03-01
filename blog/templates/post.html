@@ -21,6 +21,7 @@
         <form method="POST" action="{{ url_for('upvote', post_id=post.id) }}">
             {{ vote_form.hidden_tag() }}
             {{ vote_form.submit_upvote() }}
+            <span class="describetext">Upvote '{{ post.title }}'</span>
         </form>
         {% for vote in votes %}
         {% if loop.last %}
@@ -34,11 +35,14 @@
         <form method="POST" action="{{ url_for('downvote', post_id=post.id) }}">
             {{ vote_form.hidden_tag() }}
             {{ vote_form.submit_downvote() }}
+            <span class="describetext">Downvote '{{ post.title }}'</span>
         </form>
 
         <form method="POST" action="{{ url_for('add_fave', post_id=post.id) }}">
             {{ fave_form.hidden_tag() }}
             {{ fave_form.submit_favorite() }}
+            
+            <span class="describetext">Add/Remove '{{ post.title }}' from Favorites</span>
         </form>
 </div>
 <div class="showcomments">

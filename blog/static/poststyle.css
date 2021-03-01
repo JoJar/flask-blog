@@ -20,7 +20,7 @@ img {
     text-indent: 0.4em;
     display: grid;
     background: #334e68;
-    grid-template-rows: 1fr 5fr;
+    grid-auto-rows: minmax(min-content, max-content);
     margin-right: 1em;
     border-radius: 2%;
     justify-items: left;
@@ -38,7 +38,12 @@ img {
     color: white;
     padding-top: 0.5em;
     padding-left: 2%;
+    height: fit-content;
     width: 98%;
+}
+
+.postimg {
+    height: fit-content;
 }
 
 .content {
@@ -73,13 +78,15 @@ small {
     /*grid-column: 1;*/
     display: grid;
     grid-template-columns: repeat(7, 20px);
+    grid-column: 2;
+    grid-row: 2;
     grid-template-rows: 20px;
     grid-gap: 1em;
     justify-items: center;
 }
 
 #submit_upvote {
-    grid-column: 3;
+    grid-column: 1;
     background-image: url('img/thumbs-up.png');
     background-size: cover;
     background-color: rgba(50, 63, 75, 0.1);
@@ -87,17 +94,16 @@ small {
     width: 20px;
     cursor: pointer;
     border-color: #3d4c5a;
-    margin-left: 155px;
 }
 
 #total {
-    grid-column: 4;
+    grid-column: 2;
     font-weight: 550;
     font-size: 20px;
 }
 
 #submit_downvote {
-    grid-column: 5;
+    grid-column: 3;
     background-image: url('img/thumbs-down.png');
     background-size: cover;
     background-color: rgba(50, 63, 75, 0.1);
@@ -108,7 +114,7 @@ small {
 }
 
 #submit_favorite {
-    grid-column: 6;
+    grid-column: 4;
     background-image: url('img/favorite.png');
     background-size: cover;
     background-color: rgba(50, 63, 75, 0.1);
@@ -123,17 +129,17 @@ small {
     display: grid;
     width: 95%;
     grid-template-columns: auto;
-    grid-template-rows: ;
     color: #BCCCDC;
-    text-indent: 0.2em;
+    line-break: strict;
+    word-break: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
 }
 
 #eachcomment {
-    width: 95%;
     padding: 0.5em;
     border: 1px solid black;
     background: #334e68;
-    word-wrap: break-word;
 }
 
 #author {
@@ -142,6 +148,7 @@ small {
 
 .writecomment {
     grid-column: 2;
+    width: 97%;
     display: grid;
     grid-template-columns: auto;
     grid-template-rows: repeat(2, minmax(100px, auto));
@@ -162,4 +169,29 @@ small {
 #submit:hover {
     cursor: pointer;
     border: 0.7px solid #673AB7;
+}
+
+#submit_upvote:hover~.describetext{
+    visibility: visible;
+}
+
+#submit_downvote:hover~.describetext{
+    visibility: visible;
+}
+
+#submit_favorite:hover~.describetext{
+    visibility: visible;
+}
+
+.describetext {
+    visibility: hidden;
+    width: fit-content;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 0.3em;
+    margin-left: 0.5em;
+    font-size: 12px;
+    position: absolute;
 }

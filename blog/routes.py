@@ -134,13 +134,26 @@ def logout():
 @app.route("/profile/<username>", methods=["GET", "POST"])
 @login_required
 def profile(username):
+    fave_form = FaveForm()
     user = User.query.filter_by(username=username).first()
     if user == None:
         flash('Error, this profile does not exit.')
         return render_template('home.html')
     favourites = Fave.query.filter(Fave.user_id == user.id)
     #favourites = Post.query.filter(Fave.post_id == post.id)
-    return render_template('profile.html', user=user, favourites=favourites)
+    return render_template('profile.html', user=user, favourites=favourites, fave_form=fave_form)
+
+@app.route("/post/<int:post_id>/favourite/remove", methods=["GET", "POST"])
+@login_required
+def remove_fave_profile(post_id):
+    post = Post.query.get_or_404(post_id)
+    form = FaveForm()
+    if form.validate_on_submit():
+        if Fave.query.filter(Fave.user_id==current_user.id, Fave.favourite==post.id).first() != None:
+            Fave.query.filter(Fave.user_id==current_user.id, Fave.favourite==post.id).delete()
+            db.session.commit()
+            flash("Removed %s from %s's favourites" %(post.title, current_user.username))
+            return redirect(f'/profile/{current_user.username}')
 
 @app.route("/post/<int:post_id>/favourite", methods=["GET", "POST"])
 @login_required
@@ -166,3 +179,14 @@ def all_posts():
         return search_results(search)
     posts= Post.query.all()
     return render_template('view-posts.html', posts=posts, form=search)
+
+# Error Page Handling
+
+@app.errorhandler(401)
+def error_401(error):
+    flash("Guest accounts cannot access this feature. Please create an account or log-in.")
+    return redirect(f'/login')
+
+@app.errorhandler(404)
+def error_404(error):
+    return render_template('404.html')

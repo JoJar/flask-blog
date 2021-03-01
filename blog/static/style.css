@@ -81,5 +81,27 @@ header {
 }
 
 .flashes {
+    grid-row: 2;
     list-style-type: none;
+}
+
+@media(max-width: 1000px) {
+    .wrapper {
+        grid-template-columns: 1fr;
+        grid-template-areas: "header" "navi" "main"
+    }
+    main {
+        grid-template-columns: 1fr;
+        grid-template-rows: minmax(100px, auto);
+        grid-row-gap: 0em;
+        grid-template-areas: ".info" "img" ".post"
+    }
+}
+
+@media(max-width: 600px) {
+    .search-form {
+        grid-column: 1;
+        grid-row: 2;
+    }
+
 }
