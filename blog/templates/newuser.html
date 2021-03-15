@@ -1,14 +1,24 @@
+<!--
 <script>
     window.setTimeout(function(){
         window.location.href = "{{ url_for('login') }}";
     }, 3000);
-</script>
+</script>-->
+
 {% extends 'layout.html' %}
+
+{% block customcss %}
+<link rel="stylesheet" type=text/css href="{{ url_for('static', filename='aboutstyle.css') }}"/>
+{% endblock %}
+
 {% block header %}
 <h1>Welcome!</h1>
 {% endblock %}
-{% block title %} Welcome! {% endblock %}
+
+{% block title %}
+    Welcome!
+{% endblock %}
 {% block feed %}
-<p> Thank you for registering :) </p>
-<p class="newuser"> You will now be redirected to the login page. If nothing happens after 5 seconds click <a id="newuser-here" href="{{ url_for('login') }}">here</a></p>
+
+<p class="newuser"> Thank you for registering :) <br> <br>You will now be redirected to the login page. If nothing happens after 5 seconds click <a id="newuser-here" href="{{ url_for('login') }}">here</a></p>
 {% endblock %}

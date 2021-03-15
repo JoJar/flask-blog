@@ -7,7 +7,7 @@
 {% block search %}
     <form class="search-form" method="POST" action="">
         <input type="search" class="search-input" name="userquery" placeholder="Search...">
-        <button type="submit" value="search">Search</button>
+        <button type="submit" value="search" class="srch">Search</button>
     </form>
 {% endblock %}
 {% endblock header %}
@@ -18,9 +18,9 @@
     {% else %}
     <li class="greeting"> Hello, <i>Guest</i>! </li> 
     {% endif %}
-    <p class="info"> Be sure to check out my three most recent blog posts or use the search function at the top of the page to find a specific blog or read the post descriptions
+    <p class="info"> Be sure to check out my three most recent blog posts or use the search function at the top of the page to find a specific blog
     </p>
- 
+ <!--
     {% for post in posts %}
         <a class="postimg" href="{{ url_for('post', post_id=post.id) }}"><img src="{{ url_for('static', filename='img/' + post.image_file) }}" height=250px width=250px></a>
     <div class="post">
@@ -34,4 +34,25 @@
         </span>
     </div>
     {% endfor %}
+-->
+    <table>
+        {% for post in posts %}
+        <tr>
+            <td class="postimg">
+                <a class="postimg" href="{{ url_for('post', post_id=post.id) }}"><img src="{{ url_for('static', filename='img/' + post.image_file) }}" height=250px width=250px></a>
+            </td>
+            
+            <td class="post">
+                <!--<div class="post">-->
+                <span class="postid" id= '{{ post.user.username }}'>
+                <a class="postlnk" href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a>&nbsp
+                <small>by {{ post.user.username }}</small>
+                </span>
+                <span class="content">{{ post.content }}</span>
+            </td>
+            
+        </tr>
+        {% endfor %}
+    </table>
+    
 {% endblock %}

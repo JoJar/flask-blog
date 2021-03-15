@@ -11,17 +11,20 @@
 
 img {
     border-radius: 5%;
-    margin-left: 2em;
+    margin-left: 1em;
+    margin-right: 1em;
 }
 
 .post {
     grid-column: 2;
-    margin-top: 1em;
-    text-indent: 0.4em;
     display: grid;
-    background: #334e68;
-    grid-auto-rows: minmax(min-content, max-content);
+    margin-top: 1em;
     margin-right: 1em;
+    background: #334e68;
+    text-indent: 0.4em;
+    
+    grid-auto-rows: minmax(min-content, max-content);
+    padding: 1em;
     border-radius: 2%;
     justify-items: left;
     border: 1px solid black;
@@ -45,7 +48,7 @@ img {
 .postimg {
     height: fit-content;
 }
-
+ 
 .content {
     grid-column: 1;
     grid-row: 2;
@@ -80,6 +83,7 @@ small {
     grid-template-columns: repeat(7, 20px);
     grid-column: 2;
     grid-row: 2;
+    padding: 1em;
     grid-template-rows: 20px;
     grid-gap: 1em;
     justify-items: center;
@@ -171,6 +175,14 @@ small {
     border: 0.7px solid #673AB7;
 }
 
+
+/* 
+When hovering over the submit button a box describing the button function is displayed.
+This code was adapted from W3Schools tooltip segment
+Accessed: 01/03/2021
+URL: https://www.w3schools.com/css/css_tooltip.asp
+*/
+
 #submit_upvote:hover~.describetext{
     visibility: visible;
 }
@@ -195,3 +207,20 @@ small {
     font-size: 12px;
     position: absolute;
 }
+/* end of referenced code */
+
+/*
+    This code addresses the issue with auto complete fields in chrome where the field would turn white and disurpt the
+    webpage design. The code adds a shadow over the autofill element making it appear as the color set in webkit-box-shadow.
+    Taken from dev.to by Moulun Kevin 12 January 2021
+    Accessed: 15/03/2021
+    URL: https://dev.to/atndesign/a-trick-to-change-the-autocomplete-background-color-21ll
+*/
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #323f4b inset !important;
+  -webkit-text-fill-color: white !important;
+}
+
+/* end of referenced code */

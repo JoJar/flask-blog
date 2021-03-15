@@ -6,7 +6,7 @@ img {
     border-radius: 5%;
     margin-left: 2em;
 }
-
+ 
 .post {
     grid-column: 2;
     display: grid;
@@ -21,6 +21,7 @@ img {
 .post > span:nth-child(odd) {
     background: #627d98;
 }
+
 .postid {
     grid-column: 1;
     border-radius: 0.3em;
@@ -49,3 +50,8 @@ img {
 
 .postlnk:hover {
     color: #673AB7;
+}
+
+td {
+    width: 100%;
+}

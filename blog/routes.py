@@ -2,7 +2,7 @@ from blog.models import User, Post, Comment, Vote, Fave
 from flask import render_template, url_for, redirect, request, flash, Blueprint, jsonify
 from blog import app, db
 from flask_login import login_user, logout_user, current_user, login_required
-from blog.forms import RegistrationForm, LoginForm, CommentForm, SearchForm, VoteForm, FaveForm
+from blog.forms import RegistrationForm, LoginForm, CommentForm, SearchForm, VoteForm, FaveForm, SortForm
 from sqlalchemy import desc
 from datetime import datetime
 
@@ -171,17 +171,25 @@ def add_fave(post_id):
         flash("Added %s to %s's favourites" %(post.title, current_user.username))
         return redirect(f'/post/{post.id}')
 
-@app.route('/all-posts', methods=['GET', 'POST'])
-def all_posts():
+@app.route('/all-posts/newest', methods=['GET', 'POST'])
+def newest_posts():
     search = SearchForm(request.form)
     if request.method == 'POST':
-        print(search.data)
         return search_results(search)
+
     posts= Post.query.all()
     return render_template('view-posts.html', posts=posts, form=search)
 
-# Error Page Handling
+@app.route('/all-posts/oldest', methods=['GET', 'POST'])
+def oldest_posts():
+    search = SearchForm(request.form)
+    if request.method == 'POST':
+        return search_results(search)
 
+    posts = Post.query.order_by(desc(Post.date)).all()
+    return render_template('view-posts-reverse.html', posts=posts, form=search)
+
+# Error Page Handling
 @app.errorhandler(401)
 def error_401(error):
     flash("Guest accounts cannot access this feature. Please create an account or log-in.")

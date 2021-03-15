@@ -14,7 +14,6 @@ h2 {
 .wrapper {
     height: 100vh;
     grid-template-rows: repeat(5, 100px);
-    grid-row-gap: 1em;
 }
 
 .info {
@@ -22,4 +21,20 @@ h2 {
     color: white;
     margin: 1em;
     text-align: center;
+}
+
+#newuser-here {
+    color:white;
+    text-decoration: none;
+}
+
+#newuser-here:hover {
+    text-decoration: underline;
+}
+
+.newuser {
+    text-align: center;
+    grid-column: 2;
+    grid-row: 1;
+    color: white;
 }

@@ -51,4 +51,4 @@ class FaveForm(FlaskForm):
     submit_favorite = SubmitField('')
 
 class SortForm(FlaskForm):
-    submit_sort = SubmitField
+    submit_sort = SubmitField('')

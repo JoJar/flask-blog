@@ -18,7 +18,7 @@
         {% endblock %}
             <nav id="menu">
                 <a class="navi" href="{{ url_for('home') }}">Home</a>
-                <a class="navi" href="{{ url_for('all_posts') }}">All Posts</a>
+                <a class="navi" href="{{ url_for('newest_posts') }}">All Posts</a>
                 <a class="navi" href="{{ url_for('about') }}">About</a>
                 {% if current_user.is_authenticated %}
                 <a class="navi" href="{{ url_for('logout') }}">Logout</a>
@@ -28,24 +28,7 @@
                 {% endif %}
             </nav>
 
-            <div class="burgermenu">
-                <div class="navbar">
-                  <div class="first"></div>
-                  <div class="second"></div>
-                  <div class="third"></div>
-                </div>
-            </div>
     </header>
-
-    
-
-    <div class="burgermenu">
-        <div class="navbar">
-          <div class="first"></div>
-          <div class="second"></div>
-          <div class="third"></div>
-        </div>
-    </div>
 
     <main>
         {% block feed %}
@@ -62,8 +45,20 @@
             {% endif %}
             {% endwith %}
         </div>
+
+    
     </main>
+    <footer>
+        <span class="foot">Author: Josh Jarvis</span>
+        
+        <p>
+        <a href="https://git.cardiff.ac.uk/c1635922"><img src="{{ url_for('static', filename='img/gitlab.png') }}" height="25px" width="25px"></a>
+        <a href="https://www.linkedin.com/in/josh-jarvis-3413a3190/"><img src="{{ url_for('static', filename='img/linkedin.png') }}"height="25px" width="25px"></a>
+        </p>
+        <span class="foot"><a id="email" href="mailto:jarvisj@cardiff.ac.uk">jarvisj@cardiff.ac.uk</a></span>
+    </footer>
     </div>
+    
 </body>
 </html>
 

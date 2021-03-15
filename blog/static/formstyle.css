@@ -1,6 +1,6 @@
 main {
-    grid-template-columns: 1fr;
-    grid-template-rows: 20vh;
+    grid-template-columns: 1fr 1fr;
+    height: 50%;
     grid-row: 2/-1;
     justify-items: center;
 }
@@ -8,17 +8,36 @@ main {
 .wrapper {
     height: 100vh;
     grid-template-rows: repeat(5, 100px);
-    grid-row-gap: 1em;
 }
 
-
 label {
+    text-align: center;
     color: white;
 }
 
 input {
     background: #323f4b;
     margin: 0.5em;
+    padding: 0.25em;
+}
+
+#email {
+    background: #323f4b;
+    padding: 0.25em;
+}
+
+form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column: 1/3;
+    margin: 1em;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+form > input:nth-child(odd) {
+    grid-column: 2;
 }
 
 #submit {
@@ -33,13 +52,18 @@ input {
     border: 0.7px solid #673AB7;
 }
 
-form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-column: 1/3;
-    margin: 1em;
+ /*
+    This code addresses the issue with auto complete fields in chrome where the field would turn white and disurpt the
+    webpage design. The code adds a shadow over the autofill element making it appear as the color set in webkit-box-shadow.
+    Taken from dev.to by Moulun Kevin 12 January 2021
+    Accessed: 15/03/2021
+    URL: https://dev.to/atndesign/a-trick-to-change-the-autocomplete-background-color-21ll
+*/
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #323f4b inset !important;
+  -webkit-text-fill-color: white !important;
 }
 
-form > input:nth-child(odd) {
-    grid-column: 2;
-}
+/* end of referenced code */
