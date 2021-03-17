@@ -10,7 +10,7 @@
 {% endblock %}
 {% block feed %}
 <div class="showfavs">
-<p class="favourited">{{ user.username }}'s Favorites</p>
+<p class="favourited">{{ user.username }}'s Favourites</p>
 {% for post in favourites %}
         <p id="eachpost" id= '{{ post.user.username }}'>
             <a class="postlnk" href="{{ url_for('post', post_id=post.post.id) }}">"{{ post.post.title }}"</a>

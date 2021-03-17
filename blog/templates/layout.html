@@ -14,8 +14,10 @@
     <header class="head">
         {% block header -%}
         {%- endblock %}
+        <!-- This is where the search bar form the 'home' page and 'view posts' page is inserted into the layout  -->
         {% block search %}
         {% endblock %}
+        <!-- This is the navigation menu which remains a constant throughout all webpages -->
             <nav id="menu">
                 <a class="navi" href="{{ url_for('home') }}">Home</a>
                 <a class="navi" href="{{ url_for('newest_posts') }}">All Posts</a>
@@ -29,7 +31,7 @@
             </nav>
 
     </header>
-
+    <!-- This is where the page content is inserted, including a section which pulls error messages which are placed and formatted using CSS grid-->
     <main>
         {% block feed %}
         {% endblock %}
@@ -45,6 +47,7 @@
             {% endif %}
             {% endwith %}
     </main>
+    <!-- Footer containing a couple of links to my social media as well as my contact email. -->
     <footer>
         <span class="foot">Author: Josh Jarvis</span>
         
@@ -59,6 +62,6 @@
 </body>
 </html>
 
-
+<!-- any javascript is appended inline rather than in seperate files. -->
 {% block javascript %}
 {% endblock %}

@@ -1,9 +1,9 @@
-<!--
+<!-- This line of code waits for 5 seconds to inform the user their account has been successfully registered before redirecting the user to the login screen-->
 <script>
     window.setTimeout(function(){
         window.location.href = "{{ url_for('login') }}";
     }, 3000);
-</script>-->
+</script>
 
 {% extends 'layout.html' %}
 

@@ -12,6 +12,7 @@
 {% endblock %}
 {% endblock header %}
 
+
 {% block feed %}
     {% if current_user.is_authenticated %}
     <li class="greeting"> Hello <i>{{ current_user.username }}</i>! </li>
@@ -20,21 +21,8 @@
     {% endif %}
     <p class="info"> Be sure to check out my three most recent blog posts or use the search function at the top of the page to find a specific blog
     </p>
- <!--
-    {% for post in posts %}
-        <a class="postimg" href="{{ url_for('post', post_id=post.id) }}"><img src="{{ url_for('static', filename='img/' + post.image_file) }}" height=250px width=250px></a>
-    <div class="post">
-        <span class="postid" id= '{{ post.user.username }}'>
-            <a class="postlnk" href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a>&nbsp
-            <small>by {{ post.user.username }}</small>
-        </span>
 
-        <span class="content">
-            {{ post.content }}
-        </span>
-    </div>
-    {% endfor %}
--->
+    <!-- Uses jinja to take the three most recent posts in the database and places them in an individual row -->
     <table>
         {% for post in posts %}
         <tr>

@@ -17,11 +17,11 @@
 {% block feed %}
 {% if current_user.is_authenticated %}
     <li class="greeting"> Hello <i>{{ current_user.username }}</i>! 
-    <a href="{{ url_for('oldest_posts') }}"><button id="oldest" class="sorting">Sort by Date: Oldest</button></a>
+    <a href="{{ url_for('oldest_posts') }}"><button id="oldest" class="sorting">Sorting by Date: Newest</button></a>
     </li>
     {% else %}
     <li class="greeting"> Hello, <i>Guest</i>! 
-    <a href="{{ url_for('oldest_posts') }}"><button id="oldest" class="sorting">Sort by Date: Oldest</button></a>
+    <a href="{{ url_for('oldest_posts') }}"><button id="oldest" class="sorting">Sorting by Date: Newest</button></a>
     </li>
     
     {% endif %}

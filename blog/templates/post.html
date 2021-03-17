@@ -13,11 +13,15 @@
         <small>by {{ post.user.username }}</small>
     </span>
 <p class="content">
-    <!--{{ post.content }} -->
     {{ content_html }}
 </p>
 </div>
 
+<!-- Below is the code for the voting system. It consists of an upvote form, a downvote form and overall vote form. 
+    The number of votes is updated live and each user can only vote once. One drawback of the feature is that the user cannot
+    change their mind after their vote has been cast.
+-->
+<!-- The describe text classes below show a description of the button function to the user -->
 <div class="interact">
         <form method="POST" action="{{ url_for('upvote', post_id=post.id) }}">
             {{ vote_form.hidden_tag() }}
@@ -38,7 +42,12 @@
             {{ vote_form.submit_downvote() }}
             <span class="describetext">Downvote '{{ post.title }}'</span>
         </form>
-
+        <!-- Below is the code for the favouriting/tagging system. This system shows the image of a heart.
+             On clicking the heart the user is informed that the post has been added to their favourites.
+             When clicking the picture again, the user is informed that the post has been removed.
+             If the user goes to their profile they will see a list of their favourites and they are able to 
+             remove items from the list from here.
+        -->
         <form method="POST" action="{{ url_for('add_fave', post_id=post.id) }}">
             {{ fave_form.hidden_tag() }}
             {{ fave_form.submit_favorite() }}
@@ -46,12 +55,15 @@
             <span class="describetext">Add/Remove '{{ post.title }}' from Favorites</span>
         </form>
 </div>
+
+<!-- This shows all comments that are linked to the post in individual segments underneath the post -->
 <div class="showcomments">
 {% for comment in comments %}
 <p id="eachcomment"> {{ comment.content }} &nbsp <small><i>Author: {{ comment.user.username }} </i></small> </p>
 {% endfor %}
 </div>
 
+<!-- Allows a registered user to write a comment and post it. The comment is automatically updated and visible to the user.-->
 <div class="writecomment">
 <form method="POST" action="{{ url_for('post_comment', post_id=post.id) }}">
     {{ comment_form.hidden_tag() }}
