@@ -12,9 +12,10 @@
         <a class="postlnk" >{{ post.title }}</a>&nbsp
         <small>by {{ post.user.username }}</small>
     </span>
-<span class="content">
-    {{ post.content }}
-</span>
+<p class="content">
+    <!--{{ post.content }} -->
+    {{ content_html }}
+</p>
 </div>
 
 <div class="interact">

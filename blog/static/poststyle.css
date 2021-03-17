@@ -1,3 +1,8 @@
+.flashes {
+    grid-column: 1;
+    grid-row: 2;
+}
+
 .info {
     color: white;
     margin-top: 1em;
@@ -25,10 +30,16 @@ img {
     
     grid-auto-rows: minmax(min-content, max-content);
     padding: 1em;
-    border-radius: 2%;
+    border-radius: 1%;
     justify-items: left;
     border: 1px solid black;
     position: relative;
+}
+
+h1 {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: 0.5em;
 }
 
 .post > span:nth-child(odd) {
@@ -175,7 +186,14 @@ small {
     border: 0.7px solid #673AB7;
 }
 
+#referenceColour {
+    color: white;
+    text-decoration: none;
+}
 
+#referenceColour:hover {
+    color: #673AB7;
+}
 /* 
 When hovering over the submit button a box describing the button function is displayed.
 This code was adapted from W3Schools tooltip segment

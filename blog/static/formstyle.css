@@ -1,6 +1,6 @@
 main {
     grid-template-columns: 1fr 1fr;
-    height: 50%;
+    grid-template-rows: 1fr 10fr;
     grid-row: 2/-1;
     justify-items: center;
 }
@@ -29,7 +29,9 @@ input {
 form {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: 50px 50px 50px;
     grid-column: 1/3;
+    grid-row: 2;
     margin: 1em;
     justify-content: center;
     align-items: center;
@@ -45,6 +47,7 @@ form > input:nth-child(odd) {
     color: white;
     background: #323f4b;
     border: 0.7px solid #3d4c5a;
+    grid-column: 2;
 }
 
 #submit:hover {

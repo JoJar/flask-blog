@@ -1,5 +1,5 @@
 from blog.models import User, Post, Comment, Vote, Fave
-from flask import render_template, url_for, redirect, request, flash, Blueprint, jsonify
+from flask import render_template, url_for, redirect, request, flash, Blueprint, jsonify, Markup
 from blog import app, db
 from flask_login import login_user, logout_user, current_user, login_required
 from blog.forms import RegistrationForm, LoginForm, CommentForm, SearchForm, VoteForm, FaveForm, SortForm
@@ -13,7 +13,7 @@ def home():
     if request.method == 'POST':
         print(search.data)
         return search_results(search)
-    posts= Post.query.limit(3).all()
+    posts= Post.query.order_by(desc(Post.date)).limit(3).all() #Post.query.limit(3).all()
     return render_template('home.html', posts=posts, form=search)
 
 @app.route('/results', methods=['GET', 'POST'])
@@ -40,12 +40,13 @@ def about():
 @app.route("/post/<int:post_id>", methods=['GET', 'POST'])
 def post(post_id):
     post = Post.query.get_or_404(post_id)
+    content_html = Markup(post.content)
     votes = Vote.query.filter(Vote.post_id == post.id)
     comments = Comment.query.filter(Comment.post_id == post.id)
     comment_form = CommentForm()
     vote_form = VoteForm()
     fave_form = FaveForm()
-    return render_template('post.html', title=post.title, post=post, comments=comments, votes=votes, comment_form=comment_form, vote_form=vote_form, fave_form=fave_form)
+    return render_template('post.html', title=post.title, post=post, comments=comments, votes=votes, comment_form=comment_form, vote_form=vote_form, fave_form=fave_form, content_html=content_html)
 
 @app.route('/post/<int:post_id>/vote', methods=["GET", "POST"])
 @login_required
@@ -171,8 +172,8 @@ def add_fave(post_id):
         flash("Added %s to %s's favourites" %(post.title, current_user.username))
         return redirect(f'/post/{post.id}')
 
-@app.route('/all-posts/newest', methods=['GET', 'POST'])
-def newest_posts():
+@app.route('/all-posts/oldest', methods=['GET', 'POST'])
+def oldest_posts():
     search = SearchForm(request.form)
     if request.method == 'POST':
         return search_results(search)
@@ -180,8 +181,8 @@ def newest_posts():
     posts= Post.query.all()
     return render_template('view-posts.html', posts=posts, form=search)
 
-@app.route('/all-posts/oldest', methods=['GET', 'POST'])
-def oldest_posts():
+@app.route('/all-posts/newest', methods=['GET', 'POST'])
+def newest_posts():
     search = SearchForm(request.form)
     if request.method == 'POST':
         return search_results(search)

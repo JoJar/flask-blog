@@ -33,20 +33,17 @@
     <main>
         {% block feed %}
         {% endblock %}
-
-        <div>
             {% with messages = get_flashed_messages() %}
             {% if messages %}
+            <div class="flashes">
             <ul class=flashes>
             {% for message in messages %}
             <li class="err"><span style="color: red;">{{ message }}</span></li>
             {% endfor %}
             </ul>
+            </div>
             {% endif %}
             {% endwith %}
-        </div>
-
-    
     </main>
     <footer>
         <span class="foot">Author: Josh Jarvis</span>

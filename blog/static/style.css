@@ -43,6 +43,13 @@ header {
     place-items: center;
 }
 
+h1 {
+    font-size: 22px;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: 0.5em;
+}
+
 .head {
     color: gray;
     /*background: #494949;*/
@@ -81,7 +88,10 @@ header {
 }
 
 .flashes {
-    grid-row: 2;
+    text-align: center;
+    grid-column: 1/3;
+
+    grid-row: 1;
     list-style-type: none;
 }
 
